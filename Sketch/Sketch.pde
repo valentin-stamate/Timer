@@ -1,14 +1,16 @@
+import controlP5.*;
 
-
-int rWidth = 200, rHeight = 15;
+int rWidth = 110, rHeight = 15;
 color[] col;
 boolean[] line;
 
 int[] binary;
 boolean x, y, z, p; // the number is written binary xyzp
 
+ControlP5 cp5;
+
 void setup(){
-  size(600, 600, P2D);
+  size(600, 400, P2D);
   background(20);
   rectMode(CENTER);
   noStroke();
@@ -17,11 +19,17 @@ void setup(){
   line = new boolean[7];
   binary = new int[4];
 
-  col[0] = color(40);
+  col[0] = color(25);
   col[1] = color(255);
 
   makeDigit(7);
 
+  cp5 = new ControlP5(this);
+  cp5.addSlider("modify")
+    .setRange(0, 9)
+    .setPosition(30, height - 20)
+    .setSize(width - 100, 20)
+  ;
 }
 
 void draw(){
@@ -33,25 +41,25 @@ void draw(){
 void drawDigit(){
   //0
   fill(col[line[0] ? 1 : 0]);
-  rect(width / 2, 50, rWidth, rHeight, 10);
+  rect(width / 2, 40, rWidth, rHeight, 20);
   //1
   fill(col[line[1] ? 1 : 0]);
-  rect(width / 2, height / 2, rWidth, rHeight, 10);
+  rect(width / 2, height / 2 - 10, rWidth, rHeight, 20);
   //2
   fill(col[line[2] ? 1 : 0]);
-  rect(width / 2, height - 50, rWidth, rHeight, 10);
+  rect(width / 2, height - 60, rWidth, rHeight, 20);
   //3
   fill(col[line[3] ? 1 : 0]);
-  rect(width / 2 - rWidth / 2 - 40, 175, rHeight, rWidth, 10);
+  rect(width / 2 - rWidth / 2 - 40, 120, rHeight, rWidth, 20);
   //4
   fill(col[line[4] ? 1 : 0]);
-  rect(width / 2 + rWidth / 2 + 40, 175, rHeight, rWidth, 10);
+  rect(width / 2 + rWidth / 2 + 40, 120, rHeight, rWidth, 20);
   //5
   fill(col[line[5] ? 1 : 0]);
-  rect(width / 2 - rWidth / 2 - 40, height - 175, rHeight, rWidth, 10);
+  rect(width / 2 - rWidth / 2 - 40, 270, rHeight, rWidth, 20);
   //6
   fill(col[line[6] ? 1 : 0]);
-  rect(width / 2 + rWidth / 2 + 40, height - 175, rHeight, rWidth, 10);
+  rect(width / 2 + rWidth / 2 + 40, 270, rHeight, rWidth, 20);
 }
 
 void makeDigit(int n){
@@ -101,6 +109,10 @@ void getBinary(int n){
   z = binary[1] == 1 ? true : false;
   p = binary[0] == 1 ? true : false;
   //showBinary();
+}
+
+void modify(int value){
+  makeDigit(value % 10);
 }
 
 void showBinary(){
